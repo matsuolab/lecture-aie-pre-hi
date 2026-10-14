@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-// nginxが/app/apiをbackendコンテナへリバースプロキシするので、
-// フロントは自分がアクセスされているオリジンへの相対パスでリクエストすればよい
-// (localhostをハードコードするとCodespaceなど別ホストからのアクセスで届かなくなる)
+// nginx /app/api को backend कंटेनर पर रिवर्स प्रॉक्सी करता है, इसलिए
+// frontend उसी ओरिजिन के सापेक्ष पथ पर अनुरोध भेज सकता है जिससे उसे खोला गया है.
+// (localhost हार्डकोड करने पर Codespace जैसे किसी दूसरे होस्ट से अनुरोध नहीं पहुँच पाएगा.)
 const API_URL = "/app/api";
 
 export function App() {
@@ -22,14 +22,14 @@ export function App() {
       });
 
       if (!response.ok) {
-        throw new Error("APIエラーが発生しました");
+        throw new Error("API में त्रुटि हुई");
       }
 
       const data = await response.json();
-      setResult(`返答: ${data.reply}`);
+      setResult(`उत्तर: ${data.reply}`);
     } catch (error) {
       console.error(error);
-      setResult("通信に失敗しました。");
+      setResult("संचार विफल रहा.");
     }
   };
 
@@ -38,11 +38,11 @@ export function App() {
       <h1>Docker Compose Demo</h1>
       <input
         type="text"
-        placeholder="メッセージを入力"
+        placeholder="संदेश लिखें"
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
       />
-      <button onClick={handleSend}>送信</button>
+      <button onClick={handleSend}>भेजें</button>
       <p>{result}</p>
     </>
   );

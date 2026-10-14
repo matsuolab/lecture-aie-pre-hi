@@ -1,19 +1,19 @@
-# これは演習用のフォルダです。
+# अभ्यासों के लिए फ़ोल्डर
 
 
-## Linuxデモンストレーション
-以下のファイル構成・権限を目指します。
-権限は `ls -la` で表示される記号表記（例: `-rw-------`）で記載しています。
+## Linux प्रदर्शन
+नीचे दी गई फ़ाइल संरचना और अनुमतियाँ तैयार करनी हैं.
+अनुमतियाँ `ls -la` में दिखने वाले प्रतीकात्मक रूप में लिखी गई हैं (उदाहरण: `-rw-------`).
 
-```ファイル構成
+```फ़ाइल-संरचना
 lecture/                                        drwxr-xr-x
 ├── README.md                                   -rw-r--r--
 ├── docker-compose.yml                          -rw-r--r--
 ├── backend/                                     drwxr-xr-x
 │   ├── Dockerfile                              -rw-r--r--
 │   ├── main.py                                 -rw-r--r--
-|   ├── .env                                    -rw-------  ← chmod 600（機密情報のため所有者のみ）
-|   ├── .env.example                            -rw-r--r--  ← 共有用テンプレート
+|   ├── .env                                    -rw-------  ← chmod 600 (गोपनीय जानकारी के कारण केवल मालिक के लिए)
+|   ├── .env.example                            -rw-r--r--  ← साझा करने के लिए टेम्पलेट
 │   ├── requirements.txt                        -rw-r--r--
 └── frontend/                                    drwxr-xr-x
     ├── Dockerfile                              -rw-r--r--
@@ -28,21 +28,21 @@ lecture/                                        drwxr-xr-x
 ```
 
 
-## Dockerデモンストレーション
-Docker composeを使って開発サーバーを立ち上げられます。
+## Docker प्रदर्शन
+Docker compose से विकास सर्वर शुरू कर सकते हैं.
 ```
-cp backend/.env.example backend/.env && chmod 600 backend/.env   # 初回のみ
+cp backend/.env.example backend/.env && chmod 600 backend/.env   # केवल पहली बार
 docker compose up -d --build
 ```
 
-### 送信すると「通信に失敗しました。」(504) になる場合
-Codespaceでは、古い方式のファイアウォール(iptables-legacy)がコンテナ間の通信を捨ててしまうことがあります。
-Composeのネットワーク(`br-`で始まる名前)同士の通信を許可するため、Codespace起動後に1回だけ次を実行してください。
+### भेजने पर त्रुटि 504 दिखे: "संचार विफल रहा".
+Codespace में पुरानी फ़ायरवॉल प्रणाली (iptables-legacy) कभी-कभी कंटेनरों के बीच के संचार को रोक देती है.
+Compose के नेटवर्क (`br-` से शुरू होने वाले नाम) के बीच संचार की अनुमति देने के लिए Codespace शुरू होने के बाद एक बार यह कमांड चलाएँ.
 ```
 sudo iptables-legacy -I FORWARD 1 -i br-+ -o br-+ -j ACCEPT
 ```
-- 設定はCodespaceを再起動すると消えます(再起動後にもう一度実行)。
-- 元に戻す場合: `sudo iptables-legacy -D FORWARD -i br-+ -o br-+ -j ACCEPT`
+- Codespace दोबारा शुरू करने पर यह सेटिंग हट जाती है (दोबारा शुरू करने के बाद कमांड फिर चलाएँ).
+- सेटिंग हटाने के लिए: `sudo iptables-legacy -D FORWARD -i br-+ -o br-+ -j ACCEPT`
 
-以下が開発用サーバーになっています。
+विकास सर्वर इस पते पर उपलब्ध है.
 http://localhost:8080/
